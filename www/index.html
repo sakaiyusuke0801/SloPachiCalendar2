@@ -95,16 +95,49 @@
 	<!-- 登録ダイアログ -->
 	<ons-template id="regist_dialog.html">
 		<ons-dialog id="regist_dialog">
-			<div style="text-align: center; margin-top: 50px;">
+			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
+					投資：<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
 				</p>
 				<p>
-					<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+					リターン：<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
 				</p>
 				<p style="margin-top: 30px;">
 					<ons-button id="regOk" onclick="registNewData()">登録</ons-button>
 					<ons-button id="regNg" onclick="cancelNewData()">キャンセル</ons-button>
+				</p>
+			</div>
+		</ons-dialog>
+	</ons-template>
+
+	<!-- 更新ダイアログ -->
+	<ons-template id="update_dialog.html">
+		<ons-dialog id="update_dialog">
+			<div style="text-align: center; margin-top: 30px;">
+				<p>
+					投資：<ons-input id="invUpdateInput" type="number" modifier="material" placeholder="投資"></ons-input>
+				</p>
+				<p>
+					リターン：<ons-input id="retUpdateInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+				</p>
+				<p style="margin-top: 30px;">
+					<ons-button id="updateOk" onclick="">更新</ons-button>
+					<ons-button id="updateNg" onclick="cancelUpdateData()">キャンセル</ons-button>
+				</p>
+			</div>
+		</ons-dialog>
+	</ons-template>
+
+	<!-- 削除確認ダイアログ -->
+	<ons-template id="delete_dialog.html">
+		<ons-dialog id="delete_dialog">
+			<div style="text-align: center; margin-top: 30px;">
+				<p>
+					削除します。よろしいですか？
+				</p>
+				<p style="margin-top: 30px;">
+					<ons-button id="deleteOk" onclick="">削除</ons-button>
+					<ons-button id="deleteNg" onclick="">キャンセル</ons-button>
 				</p>
 			</div>
 		</ons-dialog>

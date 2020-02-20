@@ -63,10 +63,47 @@ app.setSelectDateList = function () {
     list.appendChild(header);
     // 選択日付リストを一覧表示
     if (selectDateObjectList != null) {
-        for (let obj of selectDateObjectList) {
+        for (let idx in selectDateObjectList) {
             // リストアイテム生成
             let item = document.createElement("ons-list-item");
-            item.textContent = "投資:" + obj.inv + " " + "リターン:" + obj.ret;
+            // データ表示部
+            let dispDataDiv = document.createElement("div");
+            // データは左
+            dispDataDiv.classList.add("left");
+            // データ表示
+            dispDataDiv.textContent = "投資:" + selectDateObjectList[idx].inv + " " + "リターン:" + selectDateObjectList[idx].ret;
+            // リストアイテムに追加
+            item.appendChild(dispDataDiv);
+
+            // メニュー
+            let menuDateDiv = document.createElement("div");
+            menuDateDiv.classList.add("right");
+
+            // 更新表示部
+            let updateStrDiv = document.createElement("div");
+            // 更新文字
+            updateStrDiv.textContent = "更新";
+            // 更新文字は右
+            updateStrDiv.classList.add("left");
+            // クリック属性追加、関数登録
+            updateStrDiv.setAttribute("onclick", "updateData(" + idx + ")");
+            // リストアイテムに追加
+            menuDateDiv.appendChild(updateStrDiv);
+
+            // 削除表示部
+            let deleteStrDiv = document.createElement("div");
+            // 更新文字は右
+            deleteStrDiv.classList.add("right");
+            // 更新文字
+            deleteStrDiv.textContent = "削除";
+            // クリック属性追加、関数登録
+            deleteStrDiv.setAttribute("onclick", "updateData(" + idx + ")");
+            // リストアイテムに追加
+            menuDateDiv.appendChild(deleteStrDiv);
+
+            // リストアイテムに追加
+            item.appendChild(menuDateDiv);
+
             // リストアイテム追加
             list.appendChild(item);
         }
@@ -74,14 +111,22 @@ app.setSelectDateList = function () {
 
     // 最後に追加用のリストアイテム生成
     let item = document.createElement("ons-list-item");
+    // 文字のDIVタグ
+    let newStringDiv = document.createElement("div");
+    // 文字は左へ
+    newStringDiv.classList.add("left");
     // 文字
-    item.textContent = "New...";
+    newStringDiv.textContent = "New...";
+    item.appendChild(newStringDiv);
+
     // クリック属性追加、関数登録
     item.setAttribute("onclick", "newData()");
     // tappable属性追加、なんか押した感じになる
     item.setAttribute("tappable");
+
     // リストアイテム追加
     list.appendChild(item);
+
 };
 
 // セッティングオブジェクト
@@ -130,10 +175,11 @@ let registNewData = function () {
         selectDateObjectList.push(obj);
 
         // ストレージへ丸ごと保存 key:日付文字列 valuie:収支オブジェクト配列
-        console.log("registNewData:key=" + selectDateStr);
-        console.log("registNewData:value=" + JSON.stringify(selectDateObjectList));
-
         app.storage.setItem(selectDateStr, JSON.stringify(selectDateObjectList));
+
+        // フォーム初期化
+        document.getElementById("invInput").value = null;
+        document.getElementById("retInput").value = null;
 
         // ダイアログ非表示
         let dialog = document.getElementById("regist_dialog");
@@ -142,13 +188,12 @@ let registNewData = function () {
         // 再描画
         // カレンダーページの読み込み
         fn.load('calendar.html');
-        // 選択日付のデータを設定する
-        //app.setSelectDateObj();
-        // 選択日付の一覧表示
-        //app.setSelectDateList();
     }
     else {
         alert("入力が正しくありません。");
+        // フォーム初期化
+        document.getElementById("invInput").value = null;
+        document.getElementById("retInput").value = null;
     }
 }
 // newキャンセルクリック
@@ -157,6 +202,51 @@ let cancelNewData = function () {
 
     // ダイアログ非表示
     let dialog = document.getElementById("regist_dialog");
+    dialog.hide();
+}
+// 更新ダイアログ表示クリック
+let updateData = function (_idx) {
+    console.log("updateData");
+
+    // ダイアログ表示
+    let dialog = document.getElementById("update_dialog");
+    if (dialog) {
+        dialog.show();
+        // フォーム初期化
+        let inv = 0;
+        let ret = 0;
+        if (selectDateObjectList[_idx].inv != null) {
+            inv = selectDateObjectList[_idx].inv;
+        }
+        if (selectDateObjectList[_idx].ret != null) {
+            ret = selectDateObjectList[_idx].ret;
+        }
+        document.getElementById("invUpdateInput").value = inv;
+        document.getElementById("retUpdateInput").value = ret;
+    } else {
+        ons.createElement('update_dialog.html', { append: true })
+            .then(function (dialog) {
+                dialog.show();
+                // フォーム初期化
+                let inv = 0;
+                let ret = 0;
+                if (selectDateObjectList[_idx].inv != null) {
+                    inv = selectDateObjectList[_idx].inv;
+                }
+                if (selectDateObjectList[_idx].ret != null) {
+                    ret = selectDateObjectList[_idx].ret;
+                }
+                document.getElementById("invUpdateInput").value = inv;
+                document.getElementById("retUpdateInput").value = ret;
+            });
+    }
+}
+// 更新キャンセルクリック
+let cancelUpdateData = function () {
+    console.log("cancelUpdateData");
+
+    // ダイアログ非表示
+    let dialog = document.getElementById("update_dialog");
     dialog.hide();
 }
 
@@ -243,5 +333,3 @@ ons.ready(function () {
     }, false);
 
 });
-
-/*  */
