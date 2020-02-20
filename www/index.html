@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+	<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+	<script src="components/loader.js"></script>
+	<script src="lib/onsenui/js/onsenui.min.js"></script>
+
+	<!-- sakai.y -->
+	<script src="js/calendar.js"></script>
+	<script src="js/main.js"></script>
+
+	<link rel="stylesheet" href="components/loader.css">
+	<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+	<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.min.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<script>
+
+	</script>
+</head>
+
+<body>
+	<ons-splitter id="menu.html">
+		<ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+			<ons-page>
+				<ons-list>
+					<ons-list-item onclick="fn.load('calendar.html')" tappable>
+						Home
+					</ons-list-item>
+					<ons-list-item onclick="fn.load('settings.html')" tappable>
+						Settings
+					</ons-list-item>
+					<ons-list-item onclick="fn.load('about.html')" tappable>
+						About
+					</ons-list-item>
+				</ons-list>
+			</ons-page>
+		</ons-splitter-side>
+		<ons-splitter-content id="content" page="calendar.html"></ons-splitter-content>
+	</ons-splitter>
+
+	<!-- カレンダー部 -->
+	<ons-template id="calendar.html">
+		<ons-page id="calendar_page">
+			<ons-toolbar>
+				<div class="left">
+					<ons-toolbar-button onclick="fn.open()">
+						<ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+				<div class="center">
+					Main
+				</div>
+			</ons-toolbar>
+			<div id="calendar">calendar is not read</div>
+			<ons-list id="balance_list">
+			</ons-list>
+		</ons-page>
+	</ons-template>
+
+	<!-- 設定画面 -->
+	<ons-template id="settings.html">
+		<ons-page id="settings_page">
+			<ons-toolbar>
+				<div class="left">
+					<ons-toolbar-button onclick="fn.open()">
+						<ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+				<div class="center">
+					Settings
+				</div>
+			</ons-toolbar>
+		</ons-page>
+	</ons-template>
+
+	<ons-template id="about.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-toolbar-button onclick="fn.open()">
+						<ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+				<div class="center">
+					About
+				</div>
+			</ons-toolbar>
+		</ons-page>
+	</ons-template>
+
+	<!-- 登録ダイアログ -->
+	<ons-template id="regist_dialog.html">
+		<ons-dialog id="regist_dialog">
+			<div style="text-align: center; margin-top: 50px;">
+				<p>
+					<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
+				</p>
+				<p>
+					<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+				</p>
+				<p style="margin-top: 30px;">
+					<ons-button id="regOk" onclick="registNewData()">登録</ons-button>
+					<ons-button id="regNg" onclick="cancelNewData()">キャンセル</ons-button>
+				</p>
+			</div>
+		</ons-dialog>
+	</ons-template>
+</body>
+
+</html>
