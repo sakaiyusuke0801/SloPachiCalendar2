@@ -66,44 +66,10 @@ app.setSelectDateList = function () {
         for (let idx in selectDateObjectList) {
             // リストアイテム生成
             let item = document.createElement("ons-list-item");
-            // データ表示部
-            let dispDataDiv = document.createElement("div");
-            // データは左
-            dispDataDiv.classList.add("left");
             // データ表示
-            dispDataDiv.textContent = "投資:" + selectDateObjectList[idx].inv + " " + "リターン:" + selectDateObjectList[idx].ret;
-            // リストアイテムに追加
-            item.appendChild(dispDataDiv);
-
-            // メニュー
-            let menuDateDiv = document.createElement("div");
-            menuDateDiv.classList.add("right");
-
-            // 更新表示部
-            let updateStrDiv = document.createElement("div");
-            // 更新文字
-            updateStrDiv.textContent = "更新";
-            // 更新文字は右
-            updateStrDiv.classList.add("left");
-            // クリック属性追加、関数登録
-            updateStrDiv.setAttribute("onclick", "updateData(" + idx + ")");
-            // リストアイテムに追加
-            menuDateDiv.appendChild(updateStrDiv);
-
-            // 削除表示部
-            let deleteStrDiv = document.createElement("div");
-            // 更新文字は右
-            deleteStrDiv.classList.add("right");
-            // 更新文字
-            deleteStrDiv.textContent = "削除";
-            // クリック属性追加、関数登録
-            deleteStrDiv.setAttribute("onclick", "updateData(" + idx + ")");
-            // リストアイテムに追加
-            menuDateDiv.appendChild(deleteStrDiv);
-
-            // リストアイテムに追加
-            item.appendChild(menuDateDiv);
-
+            item.textContent = "投資:" + selectDateObjectList[idx].inv + " " + "リターン:" + selectDateObjectList[idx].ret;
+            // クリックイベント
+            item.setAttribute("onclick", "app.showActionSheetData( '" + item.textContent + "'," + idx + ")");
             // リストアイテム追加
             list.appendChild(item);
         }
@@ -127,6 +93,45 @@ app.setSelectDateList = function () {
     // リストアイテム追加
     list.appendChild(item);
 
+};
+
+// データタッチ時アクションシート
+app.showActionSheetData = function (_dateStr, _idx) {
+    ons.openActionSheet({
+        // タイトル
+        title: _dateStr,
+        // キャンセルなんとか
+        cancelable: true,
+        // ボタンたち
+        buttons: [
+            {
+                label: "更新",
+                modifier: "destructive",
+            },
+            {
+                label: "削除",
+                modifier: "destructive",
+            },
+            {
+                label: "Cancel",
+                icon: "md-close"
+            }
+        ]
+    }).then(
+        // 押されたときのコールバック
+        // indexはボタンの位置っぽい
+        function (index) {
+            switch (index) {
+                // 更新ボタン
+                case 0:
+                    updateData(_idx);
+                    break;
+                // 削除ボタン
+                case 1:
+                    deleteData(_idx);
+                    break;
+            }
+        });
 };
 
 // セッティングオブジェクト
@@ -188,6 +193,9 @@ let registNewData = function () {
         // 再描画
         // カレンダーページの読み込み
         fn.load('calendar.html');
+
+        // 選択日付の一覧表示
+        app.setSelectDateList();
     }
     else {
         alert("入力が正しくありません。");
@@ -223,9 +231,22 @@ let updateData = function (_idx) {
         }
         document.getElementById("invUpdateInput").value = inv;
         document.getElementById("retUpdateInput").value = ret;
+
+        // ボタンの作成
+        let parent = document.getElementById("updateButtons");
+        parent.textContent = null;
+        let ok = document.createElement("ons-button");
+        ok.textContent = "更新";
+        ok.setAttribute("onclick", "exeUpdateData(" + _idx + ")");
+        let ng = document.createElement("ons-button");
+        ng.textContent = "キャンセル";
+        ng.setAttribute("onclick", "cancelUpdateData(" + _idx + ")");
+        parent.appendChild(ok);
+        parent.appendChild(ng);
     } else {
         ons.createElement('update_dialog.html', { append: true })
             .then(function (dialog) {
+
                 dialog.show();
                 // フォーム初期化
                 let inv = 0;
@@ -238,16 +259,58 @@ let updateData = function (_idx) {
                 }
                 document.getElementById("invUpdateInput").value = inv;
                 document.getElementById("retUpdateInput").value = ret;
+
+                // ボタンの作成
+                let parent = document.getElementById("updateButtons");
+                parent.textContent = null;
+                let ok = document.createElement("ons-button");
+                ok.textContent = "更新";
+                ok.setAttribute("onclick", "exeUpdateData(" + _idx + ")");
+                let ng = document.createElement("ons-button");
+                ng.textContent = "キャンセル";
+                ng.setAttribute("onclick", "cancelUpdateData(" + _idx + ")");
+                parent.appendChild(ok);
+                parent.appendChild(ng);
             });
     }
 }
+// 更新実行クリック
+let exeUpdateData = function (_idx) {
+    console.log("exeUpdateData");
+
+    // ダイアログ非表示
+    let dialog = document.getElementById("update_dialog");
+    dialog.hide();
+
+    // 再描画
+    // カレンダーページの読み込み
+    fn.load('calendar.html');
+
+    // 選択日付の一覧表示
+    app.setSelectDateList();
+}
 // 更新キャンセルクリック
-let cancelUpdateData = function () {
+let cancelUpdateData = function (_idx) {
     console.log("cancelUpdateData");
 
     // ダイアログ非表示
     let dialog = document.getElementById("update_dialog");
     dialog.hide();
+}
+// 削除確認ダイアログ表示クリック
+let deleteData = function (_idx) {
+    console.log("deleteData");
+
+    // ダイアログ表示
+    let dialog = document.getElementById("delete_dialog");
+    if (dialog) {
+        dialog.show();
+    } else {
+        ons.createElement('delete_dialog.html', { append: true })
+            .then(function (dialog) {
+                dialog.show();
+            });
+    }
 }
 
 // Onsen準備OK
@@ -296,6 +359,9 @@ ons.ready(function () {
                     }
                 }
             }
+
+            // 選択日付の一覧表示
+            app.setSelectDateList();
         }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
