@@ -19,6 +19,7 @@ th {
 }
 /* 外側の枠に対して */
 table {
+    table-layout: fixed;
     border-spacing: 0;
     border-collapse: collapse;
     border: 1px solid #111111;
