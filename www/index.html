@@ -57,6 +57,7 @@
 			</ons-toolbar>
 			<div id="calendar">calendar is not read</div>
 			<ons-list id="balance_list">
+				<!-- ここに一覧が動的にはいる -->
 			</ons-list>
 		</ons-page>
 	</ons-template>
@@ -97,10 +98,12 @@
 		<ons-dialog id="regist_dialog">
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					投資：<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
+					投資：
+					<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
 				</p>
 				<p>
-					リターン：<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+					リターン：
+					<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
 				</p>
 				<p style="margin-top: 30px;">
 					<ons-button id="regOk" onclick="registNewData()">登録</ons-button>
@@ -115,14 +118,15 @@
 		<ons-dialog id="update_dialog">
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					投資：<ons-input id="invUpdateInput" type="number" modifier="material" placeholder="投資"></ons-input>
+					投資：
+					<ons-input id="invUpdateInput" type="number" modifier="material" placeholder="投資"></ons-input>
 				</p>
 				<p>
-					リターン：<ons-input id="retUpdateInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+					リターン：
+					<ons-input id="retUpdateInput" type="number" modifier="material" placeholder="リターン"></ons-input>
 				</p>
 				<p id="updateButtons" style="margin-top: 30px;">
-					<!--<ons-button id="updateOk">更新</ons-button>-->
-					<!--<ons-button id="updateNg">キャンセル</ons-button>-->
+					<!-- ここにボタンが動的にはいる -->
 				</p>
 			</div>
 		</ons-dialog>
@@ -135,9 +139,8 @@
 				<p>
 					削除します。よろしいですか？
 				</p>
-				<p style="margin-top: 30px;">
-					<ons-button id="deleteOk" onclick="">削除</ons-button>
-					<ons-button id="deleteNg" onclick="">キャンセル</ons-button>
+				<p id="deleteButtons" style="margin-top: 30px;">
+					<!-- ここにボタンが動的にはいる -->
 				</p>
 			</div>
 		</ons-dialog>

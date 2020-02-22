@@ -34,6 +34,19 @@ let app = {};
 app.calendar = new Calendar(dispCalDate);
 // ストレージ
 app.storage = window.localStorage;
+// ローカルストレージへ選択日付をキーに選択データを格納する
+app.setStorageSelectDate = function () {
+    console.log("app.setStorageSelectDate");
+
+    // リストが空ではない
+    if (selectDateObjectList != null) {
+        // 選択日付の文字列(yyyy/mm/dd)
+        let selectDateStr = app.calendar.getDateWithString(selectDate).substr(0, 10);
+
+        // ストレージへ丸ごと保存 key:日付文字列 valuie:収支オブジェクト配列
+        app.storage.setItem(selectDateStr, JSON.stringify(selectDateObjectList));
+    }
+};
 // 選択日付のデータを設定する
 app.setSelectDateObj = function () {
     console.log("app.setSelectDateObj");
@@ -165,8 +178,6 @@ let registNewData = function () {
     let retInput = document.getElementById("retInput").value;
     // 中身ある
     if (invInput && retInput) {
-        console.log("registNewData:invInput && retInput");
-
         // 収支データ作成
         let obj = {};
         obj.inv = invInput;
@@ -178,9 +189,9 @@ let registNewData = function () {
         }
         // データを配列に追加
         selectDateObjectList.push(obj);
+        // データを保存
+        app.setStorageSelectDate();
 
-        // ストレージへ丸ごと保存 key:日付文字列 valuie:収支オブジェクト配列
-        app.storage.setItem(selectDateStr, JSON.stringify(selectDateObjectList));
 
         // フォーム初期化
         document.getElementById("invInput").value = null;
@@ -278,6 +289,25 @@ let updateData = function (_idx) {
 let exeUpdateData = function (_idx) {
     console.log("exeUpdateData");
 
+    // 更新の実行
+    // 投資
+    let invInput = document.getElementById("invUpdateInput").value;
+    // リターン
+    let retInput = document.getElementById("retUpdateInput").value;
+    // 中身ある
+    if (invInput && retInput) {
+        // リストのチェック
+        if (selectDateObjectList == null) {
+            // 空なら初期化
+            selectDateObjectList = [];
+        }
+        selectDateObjectList[_idx].inv = invInput;
+        selectDateObjectList[_idx].ret = retInput;
+    }
+
+    // データを保存
+    app.setStorageSelectDate();
+
     // ダイアログ非表示
     let dialog = document.getElementById("update_dialog");
     dialog.hide();
@@ -305,12 +335,66 @@ let deleteData = function (_idx) {
     let dialog = document.getElementById("delete_dialog");
     if (dialog) {
         dialog.show();
+
+        // ボタンの作成
+        let parent = document.getElementById("deleteButtons");
+        parent.textContent = null;
+        let ok = document.createElement("ons-button");
+        ok.textContent = "削除";
+        ok.setAttribute("onclick", "exeDeleteData(" + _idx + ")");
+        let ng = document.createElement("ons-button");
+        ng.textContent = "キャンセル";
+        ng.setAttribute("onclick", "cancelDeleteData(" + _idx + ")");
+        parent.appendChild(ok);
+        parent.appendChild(ng);
+
     } else {
         ons.createElement('delete_dialog.html', { append: true })
             .then(function (dialog) {
                 dialog.show();
+
+                // ボタンの作成
+                let parent = document.getElementById("deleteButtons");
+                parent.textContent = null;
+                let ok = document.createElement("ons-button");
+                ok.textContent = "削除";
+                ok.setAttribute("onclick", "exeDeleteData(" + _idx + ")");
+                let ng = document.createElement("ons-button");
+                ng.textContent = "キャンセル";
+                ng.setAttribute("onclick", "cancelDeleteData(" + _idx + ")");
+                parent.appendChild(ok);
+                parent.appendChild(ng);
             });
     }
+}
+// 削除実行クリック
+let exeDeleteData = function (_idx) {
+    console.log("exeDeleteData");
+
+    // 削除の実行
+    selectDateObjectList.splice(_idx, 1);
+
+    // データを保存
+    app.setStorageSelectDate();
+
+    // ダイアログ非表示
+    let dialog = document.getElementById("delete_dialog");
+    dialog.hide();
+
+    // 再描画
+    // カレンダーページの読み込み
+    fn.load('calendar.html');
+
+    // 選択日付の一覧表示
+    app.setSelectDateList();
+}
+// 削除キャンセルクリック
+let cancelDeleteData = function (_idx) {
+    console.log("cancelDeleteData");
+
+    // ダイアログ非表示
+    let dialog = document.getElementById("delete_dialog");
+    dialog.hide();
 }
 
 // Onsen準備OK
@@ -339,12 +423,14 @@ ons.ready(function () {
                         // ローカルストレージからデータ取得
                         if (app.storage.getItem(dateStr) != null) {
                             let array = JSON.parse(app.storage.getItem(dateStr));
-                            let total = 0;
-                            for (let obj of array) {
-                                total += (parseInt(obj.ret, 10) - parseInt(obj.inv, 10));
+                            if (array.length != 0) {
+                                let total = 0;
+                                for (let obj of array) {
+                                    total += (parseInt(obj.ret, 10) - parseInt(obj.inv, 10));
+                                }
+                                // 合計金額を表示
+                                node.innerHTML = total;
                             }
-                            // 合計金額を表示
-                            node.innerHTML = total;
                         }
 
                         // 日にちをクリックしたときの動作登録
