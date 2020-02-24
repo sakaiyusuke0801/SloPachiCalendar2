@@ -441,6 +441,7 @@ ons.ready(function () {
                             app.setSelectDateObj();
                             // 選択日付の一覧表示
                             app.setSelectDateList();
+
                         }, false);
                     }
                 }
