@@ -28,13 +28,13 @@
 			<ons-page>
 				<ons-list>
 					<ons-list-item onclick="fn.load('calendar.html')" tappable>
-						Home
+						カレンダー
 					</ons-list-item>
 					<ons-list-item onclick="fn.load('settings.html')" tappable>
-						Settings
+						設定
 					</ons-list-item>
 					<ons-list-item onclick="fn.load('about.html')" tappable>
-						About
+						その他
 					</ons-list-item>
 				</ons-list>
 			</ons-page>
@@ -52,11 +52,11 @@
 					</ons-toolbar-button>
 				</div>
 				<div class="center">
-					Main
+					カレンダー
 				</div>
 			</ons-toolbar>
 			<div id="calendar">calendar is not read</div>
-            <!-- スクロールでかこってみた -->
+			<!-- スクロールでかこってみた -->
 			<div class="scroller">
 				<ons-list id="balance_list">
 					<!-- ここに一覧が動的にはいる -->
@@ -75,9 +75,43 @@
 					</ons-toolbar-button>
 				</div>
 				<div class="center">
-					Settings
+					設定
 				</div>
 			</ons-toolbar>
+			<!-- 設定内容 -->
+			<ons-list>
+				<ons-list-header>開始日</ons-list-header>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="start-day" input-id="day-5" value="5" onchange="startDayRadioChange()" checked></ons-radio>
+                    </label>
+					<label for="day-5" class="center">5日</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+                <ons-radio name="start-day" input-id="day-10" value="10" onchange="startDayRadioChange()"></ons-radio>
+                </label>
+					<label for="day-10" class="center">10日</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="start-day" input-id="day-15" value="15" onchange="startDayRadioChange()"></ons-radio>
+                    </label>
+					<label for="day-15" class="center">15日</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="start-day" input-id="day-25" value="25" onchange="startDayRadioChange()"></ons-radio>
+                    </label>
+					<label for="day-25" class="center">25日</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="start-day" input-id="day-31" value="31" onchange="startDayRadioChange()"></ons-radio>
+                    </label>
+					<label for="day-31" class="center">月末</label>
+				</ons-list-item>
+			</ons-list>
 		</ons-page>
 	</ons-template>
 

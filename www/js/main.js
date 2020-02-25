@@ -396,6 +396,19 @@ let cancelDeleteData = function (_idx) {
     let dialog = document.getElementById("delete_dialog");
     dialog.hide();
 }
+// 開始日変更
+let startDayRadioChange = function () {
+    console.log("startDayRadioChange");
+
+    let startDayRadios = document.getElementsByName("start-day");
+    for (let radio of startDayRadios) {
+        if (radio.checked) {
+            setting.startDate = radio.value;
+            break
+        }
+    }
+}
+
 
 // Onsen準備OK
 ons.ready(function () {
