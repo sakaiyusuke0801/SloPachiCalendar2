@@ -36,3 +36,6 @@ td {
     color: blue;
     pointer-events: none; /* 電話番号リンク無効 */
 }
+#blance_list {
+      pointer-events: none; /* 電話番号リンク無効 */
+}
