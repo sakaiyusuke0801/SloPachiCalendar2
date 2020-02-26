@@ -409,6 +409,22 @@ let startDayRadioChange = function () {
     }
 }
 
+// 翌月移動
+let setNextMonth = function () {
+    // 表示日付の月を加算する
+    dispCalDate.setMonth(dispCalDate.getMonth() + 1);
+    // 再描画
+    // カレンダーページの読み込み
+    fn.load('calendar.html');
+}
+// 前月移動
+let setBeforeMonth = function () {
+    // 表示日付の月を加算する
+    dispCalDate.setMonth(dispCalDate.getMonth() - 1);
+    // 再描画
+    // カレンダーページの読み込み
+    fn.load('calendar.html');
+}
 
 // Onsen準備OK
 ons.ready(function () {

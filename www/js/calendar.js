@@ -103,7 +103,16 @@ class Calendar {
         // テーブルタグ
         outHtml += "<table id='" + ID_CALENDAR_TABLE + "'>";
         // 説明 ここでは年月
-        outHtml += "<caption id='" + ID_CALENDAR_TABLE_CAPTION + "'>" + year + "/" + month + "</caption>";
+        outHtml += "<caption id='" + ID_CALENDAR_TABLE_CAPTION + "'>";
+        // 前月移動マーク
+        outHtml += "<a hlef='' onclick='setBeforeMonth()'><<</a>";
+        // 年月
+        outHtml += year + "/" + month;
+        // 翌月移動マーク
+        outHtml += "<a hlef='' onclick='setNextMonth()'>>></a>";
+        // 閉じタグ
+        outHtml += "</caption>";
+
         // 曜日ヘッダー
         outHtml += "<thead id='" + ID_CALENDAR_TABLE_HEADER + "'><tr>";
         for (let i = 0; i < WEEKS.length; i++) {
