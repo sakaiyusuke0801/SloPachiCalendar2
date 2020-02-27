@@ -2,6 +2,7 @@
 /* カレンダーの大外枠 */
 #calendar_parent {
     position: fixed;
+    margin-top: 61px;
     width: 100%;        /* 横幅100% */
     height: 50vh;       /* 半分 */
     z-index: 100;

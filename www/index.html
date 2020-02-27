@@ -42,25 +42,28 @@
 		<ons-splitter-content id="content" page="calendar.html"></ons-splitter-content>
 	</ons-splitter>
 
-	<!-- カレンダー部 -->
-	<ons-template id="calendar.html">
-		<ons-page id="calendar_page">
-			<ons-toolbar>
-				<div class="left">
-					<ons-toolbar-button onclick="fn.open()">
-						<ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
-					</ons-toolbar-button>
-				</div>
-				<div class="center">
-					カレンダー
-				</div>
-			</ons-toolbar>
-			<div id="calendar">calendar is not read</div>
-			<ons-list id="balance_list">
-				<!-- ここに一覧が動的にはいる -->
-			</ons-list>
-		</ons-page>
-	</ons-template>
+  <!-- カレンダー部 -->
+  <ons-template id="calendar.html">
+    <ons-page id="calendar_page" class="page">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          カレンダー
+        </div>
+      </ons-toolbar>
+      <div class="page__background"></div>
+      <div id="calendar">calendar is not read</div>
+      <div class="page__content">
+        <ons-list id="balance_list">
+          <!-- ここに一覧が動的にはいる -->
+        </ons-list>
+      </div>
+    </ons-page>
+  </ons-template>
 
 	<!-- 設定画面 -->
 	<ons-template id="settings.html">
