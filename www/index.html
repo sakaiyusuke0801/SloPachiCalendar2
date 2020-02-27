@@ -14,7 +14,7 @@
 
 	<link rel="stylesheet" href="components/loader.css">
 	<link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
-	<link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.min.css">
+	<link id="costum_style" rel="stylesheet" href="lib/onsenui/css/onsen-css-components.min.css">
 	<link rel="stylesheet" href="css/style.css">
 
 	<script>
@@ -42,28 +42,39 @@
 		<ons-splitter-content id="content" page="calendar.html"></ons-splitter-content>
 	</ons-splitter>
 
-  <!-- カレンダー部 -->
-  <ons-template id="calendar.html">
-    <ons-page id="calendar_page" class="page">
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button onclick="fn.open()">
-            <ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-        <div class="center">
-          カレンダー
-        </div>
-      </ons-toolbar>
-      <div class="page__background"></div>
-      <div id="calendar">calendar is not read</div>
-      <div class="page__content">
-        <ons-list id="balance_list">
-          <!-- ここに一覧が動的にはいる -->
-        </ons-list>
-      </div>
-    </ons-page>
-  </ons-template>
+
+	<!-- カレンダー部 -->
+
+	<ons-template id="calendar.html">
+
+		<ons-page id="calendar_page" class="page">
+
+			<ons-toolbar>
+
+				<div class="left">
+
+					<ons-toolbar-button onclick="fn.open()">
+
+						<ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+
+				<div class="center">
+					カレンダー
+				</div>
+			</ons-toolbar>
+			<div class="page__background"></div>
+			<div id="calendar">calendar is not read</div>
+			<div id="balance_all">
+				<!-- ここに合計金額がはいる -->
+			</div>
+			<div class="page__content">
+				<ons-list id="balance_list">
+					<!-- ここに一覧が動的にはいる -->
+				</ons-list>
+			</div>
+		</ons-page>
+	</ons-template>
 
 	<!-- 設定画面 -->
 	<ons-template id="settings.html">
@@ -83,14 +94,14 @@
 				<ons-list-header>開始日</ons-list-header>
 				<ons-list-item tappable>
 					<label class="left">
-                        <ons-radio name="start-day" input-id="day-5" value="5" onchange="startDayRadioChange()" checked></ons-radio>
+                        <ons-radio name="start-day" input-id="day-5" value="5" onchange="startDayRadioChange()" ></ons-radio>
                     </label>
 					<label for="day-5" class="center">5日</label>
 				</ons-list-item>
 				<ons-list-item tappable>
 					<label class="left">
-                <ons-radio name="start-day" input-id="day-10" value="10" onchange="startDayRadioChange()"></ons-radio>
-                </label>
+                        <ons-radio name="start-day" input-id="day-10" value="10" onchange="startDayRadioChange()"></ons-radio>
+                    </label>
 					<label for="day-10" class="center">10日</label>
 				</ons-list-item>
 				<ons-list-item tappable>
@@ -110,6 +121,25 @@
                         <ons-radio name="start-day" input-id="day-31" value="31" onchange="startDayRadioChange()"></ons-radio>
                     </label>
 					<label for="day-31" class="center">月末</label>
+				</ons-list-item>
+				<ons-list-header>スタイル</ons-list-header>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="styleCss" input-id="default" value="lib/onsenui/css/onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
+                    </label>
+					<label for="default" class="center">デフォルト</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="styleCss" input-id="dark" value="lib/onsenui/css/dark-onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
+                    </label>
+					<label for="dark" class="center">ダーク</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+                        <ons-radio name="styleCss" input-id="old" value="lib/onsenui/css/old-onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
+                    </label>
+					<label for="old" class="center">オールド</label>
 				</ons-list-item>
 			</ons-list>
 		</ons-page>
@@ -135,7 +165,7 @@
 		<ons-dialog id="regist_dialog">
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					投資：
+					投資　　：
 					<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
 				</p>
 				<p>
@@ -143,8 +173,8 @@
 					<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
 				</p>
 				<p style="margin-top: 30px;">
-					<ons-button id="regOk" onclick="registNewData()">登録</ons-button>
-					<ons-button id="regNg" onclick="cancelNewData()">キャンセル</ons-button>
+					<ons-button id="regOk" modifier="material--flat" onclick="registNewData()">登録</ons-button>
+					<ons-button id="regNg" modifier="material--flat" onclick="cancelNewData()">キャンセル</ons-button>
 				</p>
 			</div>
 		</ons-dialog>
@@ -155,7 +185,7 @@
 		<ons-dialog id="update_dialog">
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					投資：
+					投資　　：
 					<ons-input id="invUpdateInput" type="number" modifier="material" placeholder="投資"></ons-input>
 				</p>
 				<p>

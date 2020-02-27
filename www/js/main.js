@@ -248,9 +248,11 @@ let updateData = function (_idx) {
         parent.textContent = null;
         let ok = document.createElement("ons-button");
         ok.textContent = "更新";
+        ok.setAttribute("modifier", "material--flat");
         ok.setAttribute("onclick", "exeUpdateData(" + _idx + ")");
         let ng = document.createElement("ons-button");
         ng.textContent = "キャンセル";
+        ng.setAttribute("modifier", "material--flat");
         ng.setAttribute("onclick", "cancelUpdateData(" + _idx + ")");
         parent.appendChild(ok);
         parent.appendChild(ng);
@@ -276,9 +278,11 @@ let updateData = function (_idx) {
                 parent.textContent = null;
                 let ok = document.createElement("ons-button");
                 ok.textContent = "更新";
+                ok.setAttribute("modifier", "material--flat");
                 ok.setAttribute("onclick", "exeUpdateData(" + _idx + ")");
                 let ng = document.createElement("ons-button");
                 ng.textContent = "キャンセル";
+                ng.setAttribute("modifier", "material--flat");
                 ng.setAttribute("onclick", "cancelUpdateData(" + _idx + ")");
                 parent.appendChild(ok);
                 parent.appendChild(ng);
@@ -341,9 +345,11 @@ let deleteData = function (_idx) {
         parent.textContent = null;
         let ok = document.createElement("ons-button");
         ok.textContent = "削除";
+        ok.setAttribute("modifier", "material--flat");
         ok.setAttribute("onclick", "exeDeleteData(" + _idx + ")");
         let ng = document.createElement("ons-button");
         ng.textContent = "キャンセル";
+        ng.setAttribute("modifier", "material--flat");
         ng.setAttribute("onclick", "cancelDeleteData(" + _idx + ")");
         parent.appendChild(ok);
         parent.appendChild(ng);
@@ -358,9 +364,11 @@ let deleteData = function (_idx) {
                 parent.textContent = null;
                 let ok = document.createElement("ons-button");
                 ok.textContent = "削除";
+                ok.setAttribute("modifier", "material--flat");
                 ok.setAttribute("onclick", "exeDeleteData(" + _idx + ")");
                 let ng = document.createElement("ons-button");
                 ng.textContent = "キャンセル";
+                ng.setAttribute("modifier", "material--flat");
                 ng.setAttribute("onclick", "cancelDeleteData(" + _idx + ")");
                 parent.appendChild(ok);
                 parent.appendChild(ng);
@@ -409,16 +417,31 @@ let startDayRadioChange = function () {
     }
 }
 
+// スタイルCSS変更
+let styleCssRadioChange = function () {
+    console.log("styleCssRadioChange");
+
+    let styleCss = document.getElementsByName("styleCss");
+    for (let radio of styleCss) {
+        if (radio.checked) {
+            document.getElementById("costum_style").href = radio.value;
+            break
+        }
+    }
+}
+
 // 翌月移動
 let setNextMonth = function () {
     // 表示日付の月を加算する
     dispCalDate.setMonth(dispCalDate.getMonth() + 1);
-
+    // カレンダーの日付を更新する
+    app.calendar.setNowDispDate(dispCalDate);
+    // 選択日付をその月の開始日にする
+    selectDate = new Date(dispCalDate.getFullYear(), dispCalDate.getMonth(), 1);
     // 選択日付のデータを設定する
     app.setSelectDateObj();
     // 選択日付の一覧表示
     app.setSelectDateList();
-
     // 再描画
     // カレンダーページの読み込み
     fn.load('calendar.html');
@@ -427,6 +450,14 @@ let setNextMonth = function () {
 let setBeforeMonth = function () {
     // 表示日付の月を加算する
     dispCalDate.setMonth(dispCalDate.getMonth() - 1);
+    // カレンダーの日付を更新する
+    app.calendar.setNowDispDate(dispCalDate);
+    // 選択日付をその月の開始日にする
+    selectDate = new Date(dispCalDate.getFullYear(), dispCalDate.getMonth(), 1);
+    // 選択日付のデータを設定する
+    app.setSelectDateObj();
+    // 選択日付の一覧表示
+    app.setSelectDateList();
     // 再描画
     // カレンダーページの読み込み
     fn.load('calendar.html');
@@ -444,7 +475,8 @@ ons.ready(function () {
         // カレンダーページ
         if (event.target.matches("#calendar_page")) {
             console.log("calendar_page init");
-
+            // 月の合計金額
+            let monthAll = 0;
             // カレンダー本体の表示
             document.getElementById("calendar").innerHTML = app.calendar.createCalendar(setting.startDate);
             // 日にちセルの取得 *ターゲットセルのみ
@@ -465,6 +497,8 @@ ons.ready(function () {
                                 }
                                 // 合計金額を表示
                                 node.innerHTML = total;
+                                // 月の合計金額に合算
+                                monthAll += total;
                             }
                         }
 
@@ -481,6 +515,9 @@ ons.ready(function () {
                     }
                 }
             }
+            // 月合計を入力
+            let balance_all = document.getElementById("balance_all");
+            balance_all.textContent = monthAll;
 
             // 選択日付の一覧表示
             app.setSelectDateList();

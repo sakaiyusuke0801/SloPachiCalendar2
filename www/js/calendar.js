@@ -36,7 +36,15 @@ class Calendar {
     getMonth() {
         return this.nowDispDate.getMonth() + 1;
     }
-
+    // 現在表示しているDate型の更新
+    setNowDispDate(_date) {
+        this.nowDispDate = _date;
+        // 時刻はすべて0にする
+        this.nowDispDate.setHours(0);
+        this.nowDispDate.setMinutes(0);
+        this.nowDispDate.setSeconds(0);
+        this.nowDispDate.setMilliseconds(0);
+    }
     // 日付をYYYY/MM/DD hh:mm:ss形式で返却
     getDateWithString(_date) {
         let year_str = _date.getFullYear();
@@ -88,7 +96,7 @@ class Calendar {
         // 範囲ターゲット開始する日の曜日
         let startWeek = startDate.getDay();
         // 範囲ターゲット開始から前の日曜のDateオブジェクト
-        let dispDate = new Date();
+        let dispDate = startDate;
         // 時刻はすべて0にする
         dispDate.setHours(0);
         dispDate.setMinutes(0);
@@ -105,12 +113,14 @@ class Calendar {
         // 説明 ここでは年月
         outHtml += "<caption id='" + ID_CALENDAR_TABLE_CAPTION + "'>";
         // 前月移動マーク
-        outHtml += "<a hlef='' onclick='setBeforeMonth()'><<</a>";
+        outHtml += "<section style='padding:2px'>"
+        outHtml += "<ons-button modifier='material--flat' onclick='setBeforeMonth()'>＜＜前月　</ons-button>";
         // 年月
         outHtml += year + "/" + month;
         // 翌月移動マーク
-        outHtml += "<a hlef='' onclick='setNextMonth()'>>></a>";
+        outHtml += "<ons-button modifier='material--flat' onclick='setNextMonth()'>　次月＞＞</ons-button>";
         // 閉じタグ
+        outHtml += "</section>";
         outHtml += "</caption>";
 
         // 曜日ヘッダー
