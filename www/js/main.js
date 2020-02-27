@@ -413,6 +413,12 @@ let startDayRadioChange = function () {
 let setNextMonth = function () {
     // 表示日付の月を加算する
     dispCalDate.setMonth(dispCalDate.getMonth() + 1);
+
+    // 選択日付のデータを設定する
+    app.setSelectDateObj();
+    // 選択日付の一覧表示
+    app.setSelectDateList();
+
     // 再描画
     // カレンダーページの読み込み
     fn.load('calendar.html');
