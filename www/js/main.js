@@ -517,7 +517,8 @@ ons.ready(function () {
             }
             // 月合計を入力
             let balance_all = document.getElementById("balance_all");
-            balance_all.textContent = monthAll;
+            balance_all.setAttribute( "style", "color:blue" );
+            balance_all.textContent = "合計　" + monthAll;
 
             // 選択日付の一覧表示
             app.setSelectDateList();
