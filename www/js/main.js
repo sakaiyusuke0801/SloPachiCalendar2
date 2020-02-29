@@ -505,6 +505,69 @@ let setBeforeMonth = function () {
     fn.load('calendar.html');
 }
 
+// 設定の全データ確認ダイアログ表示クリック
+let settingDeleteAllData = function () {
+    console.log("settingDeleteAllData");
+
+    // ダイアログ表示
+    let dialog = document.getElementById("delete_deta_dialog");
+    if (dialog) {
+        dialog.show();
+
+        // ボタンの作成
+        let parent = document.getElementById("deleteButtons");
+        parent.textContent = null;
+        let ok = document.createElement("ons-button");
+        ok.textContent = "クリア";
+        ok.setAttribute("modifier", "material--flat");
+        ok.setAttribute("onclick", "exeSettingDeleteAllData()");
+        let ng = document.createElement("ons-button");
+        ng.textContent = "キャンセル";
+        ng.setAttribute("modifier", "material--flat");
+        ng.setAttribute("onclick", "cancelSettingDeleteAllData()");
+        parent.appendChild(ok);
+        parent.appendChild(ng);
+
+    } else {
+        ons.createElement('delete_deta_dialog.html', { append: true })
+            .then(function (dialog) {
+                dialog.show();
+
+                // ボタンの作成
+                let parent = document.getElementById("deleteButtons");
+                parent.textContent = null;
+                let ok = document.createElement("ons-button");
+                ok.textContent = "クリア";
+                ok.setAttribute("modifier", "material--flat");
+                ok.setAttribute("onclick", "exeSettingDeleteAllData()");
+                let ng = document.createElement("ons-button");
+                ng.textContent = "キャンセル";
+                ng.setAttribute("modifier", "material--flat");
+                ng.setAttribute("onclick", "cancelSettingDeleteAllData()");
+                parent.appendChild(ok);
+                parent.appendChild(ng);
+            });
+    }
+}
+// 全データクリア実行
+let exeSettingDeleteAllData = function () {
+    console.log("exeSettingDeleteAllData");
+
+    // 全データクリア
+    app.storage.clear();
+    // ダイアログ非表示
+    let dialog = document.getElementById("delete_deta_dialog");
+    dialog.hide();
+}
+// 全データクリアキャンセル
+let cancelSettingDeleteAllData = function () {
+    console.log("cancelSettingDeleteAllData");
+
+    // ダイアログ非表示
+    let dialog = document.getElementById("delete_deta_dialog");
+    dialog.hide();
+}
+
 // Onsen準備OK
 ons.ready(function () {
     console.log("Onsen UI is ready");

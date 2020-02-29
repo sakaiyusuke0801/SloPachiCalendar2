@@ -141,6 +141,10 @@
                     </label>
 					<label for="old" class="center">オールド</label>
 				</ons-list-item>
+				<ons-list-header>データ</ons-list-header>
+				<ons-list-item onclick="settingDeleteAllData()" tappable>
+					データクリア
+				</ons-list-item>
 			</ons-list>
 		</ons-page>
 	</ons-template>
@@ -205,6 +209,23 @@
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
 					削除します。よろしいですか？
+				</p>
+				<p id="deleteButtons" style="margin-top: 30px;">
+					<!-- ここにボタンが動的にはいる -->
+				</p>
+			</div>
+		</ons-dialog>
+	</ons-template>
+
+	<!-- データクリア確認ダイアログ -->
+	<ons-template id="delete_deta_dialog.html">
+		<ons-dialog id="delete_deta_dialog">
+			<div style="text-align: center; margin-top: 30px;">
+				<p>
+					すべてのデータをクリアします。
+				</p>
+				<p>
+					よろしいですか？
 				</p>
 				<p id="deleteButtons" style="margin-top: 30px;">
 					<!-- ここにボタンが動的にはいる -->
