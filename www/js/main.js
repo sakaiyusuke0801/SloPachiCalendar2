@@ -671,6 +671,8 @@ ons.ready(function () {
         }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
+            // 設定の保存
+            setting.setStorage();
         }
     }, false);
     // onsenUIのページが画面に現れるたび
