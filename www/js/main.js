@@ -30,11 +30,11 @@ let selectDateObjectList = [];
 
 // アプリケーションオブジェクト
 let app = {};
-// カレンダー
+// アプリケーション：カレンダー
 app.calendar = new Calendar(dispCalDate);
-// ストレージ
+// アプリケーション：ストレージ
 app.storage = window.localStorage;
-// ローカルストレージへ選択日付をキーに選択データを格納する
+// アプリケーション：ローカルストレージへ選択日付をキーに選択データを格納する
 app.setStorageSelectDate = function () {
     console.log("app.setStorageSelectDate");
 
@@ -47,7 +47,7 @@ app.setStorageSelectDate = function () {
         app.storage.setItem(selectDateStr, JSON.stringify(selectDateObjectList));
     }
 };
-// 選択日付のデータを設定する
+// アプリケーション：選択日付のデータを設定する
 app.setSelectDateObj = function () {
     console.log("app.setSelectDateObj");
     // 選択日付の文字列(yyyy/mm/dd)
@@ -59,7 +59,7 @@ app.setSelectDateObj = function () {
         selectDateObjectList = [];
     }
 };
-// 選択日付のデータ一覧
+// アプリケーション：選択日付のデータ一覧
 app.setSelectDateList = function () {
     console.log("app.setSelectDateList");
 
@@ -107,8 +107,7 @@ app.setSelectDateList = function () {
     list.appendChild(item);
 
 };
-
-// データタッチ時アクションシート
+// アプリケーション：データタッチ時アクションシート
 app.showActionSheetData = function (_dateStr, _idx) {
     ons.openActionSheet({
         // タイトル
@@ -149,7 +148,37 @@ app.showActionSheetData = function (_dateStr, _idx) {
 
 // セッティングオブジェクト
 let setting = {};
+// セッティング:開始日
 setting.startDate = 5;
+setting.startDateKey = "startDate";
+// セッティング:テーマ
+setting.Thema = "lib/onsenui/css/onsen-css-components.min.css";
+setting.ThemaKey = "Thema";
+// セッティング:初期化
+// ストレージからセッティングデータを取得して設定する
+setting.initSetting = function () {
+    // 開始日取得
+    setting.startDate = parseInt(app.storage.getItem(setting.startDateKey), 10);
+    if (!setting.startDate) {
+        // 空なら初期値
+        setting.startDate = 5;
+    }
+    // テーマ
+    setting.Thema = app.storage.getItem(setting.ThemaKey);
+    if (!setting.Thema) {
+        // 空なら初期値
+        setting.Thema = "lib/onsenui/css/onsen-css-components.min.css";
+    }
+}
+// セッティング:設定
+// ストレージへ設定を保存する
+setting.setStorage = function () {
+    // ストレージへ保存 key:設定文字列 valuie:設定文字列
+    // 開始日
+    app.storage.setItem(setting.startDateKey, setting.startDate);
+    // テーマ
+    app.storage.setItem(setting.ThemaKey, setting.Thema);
+}
 
 // New...クリック
 let newData = function () {
@@ -408,22 +437,35 @@ let cancelDeleteData = function (_idx) {
 let startDayRadioChange = function () {
     console.log("startDayRadioChange");
 
+    // Nameからタグを全取得
     let startDayRadios = document.getElementsByName("start-day");
+    // どのラジオボタンにチェックがついているか調べる
     for (let radio of startDayRadios) {
+        // 見つけたら
         if (radio.checked) {
+            // 設定オブジェクトに代入
             setting.startDate = radio.value;
+            // ストレージへ保存
+            setting.setStorage();
             break
         }
     }
 }
-
 // スタイルCSS変更
 let styleCssRadioChange = function () {
     console.log("styleCssRadioChange");
 
+    // Nameからタグを全取得
     let styleCss = document.getElementsByName("styleCss");
+    // どのラジオボタンにチェックがついているか調べる
     for (let radio of styleCss) {
+        // 見つけたら
         if (radio.checked) {
+            // 設定オブジェクトに代入
+            setting.Thema = radio.value;
+            // ストレージへ保存
+            setting.setStorage();
+            // スタイル変更
             document.getElementById("costum_style").href = radio.value;
             break
         }
@@ -467,11 +509,17 @@ let setBeforeMonth = function () {
 ons.ready(function () {
     console.log("Onsen UI is ready");
 
+    // 設定の初期化
+    setting.initSetting();
+    // 設定からスタイル変更
+    document.getElementById("costum_style").href = setting.Thema;
+
     // カレンダーページの読み込み
     fn.load('calendar.html');
 
     // onsenUIのページが読み込まれたとき
     document.addEventListener("init", function (event) {
+
         // カレンダーページ
         if (event.target.matches("#calendar_page")) {
             console.log("calendar_page init");
@@ -517,7 +565,7 @@ ons.ready(function () {
             }
             // 月合計を入力
             let balance_all = document.getElementById("balance_all");
-            balance_all.setAttribute( "style", "color:blue" );
+            balance_all.setAttribute("style", "color:blue");
             balance_all.textContent = "合計　" + monthAll;
 
             // 選択日付の一覧表示
@@ -525,6 +573,31 @@ ons.ready(function () {
         }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
+            // ラジオボタンの初期値補正
+            // 開始日
+            // Nameからタグを全取得
+            let startDayRadios = document.getElementsByName("start-day");
+            // どのラジオボタンにチェックをつけるか設定から調べる
+            for (let radio of startDayRadios) {
+                // 見つけたら
+                if (setting.startDate == radio.value) {
+                    // チェックON
+                    radio.checked = true;
+                    break
+                }
+            }
+            // テーマ
+            // Nameからタグを全取得
+            let styleCss = document.getElementsByName("styleCss");
+            // どのラジオボタンにをつけるか設定から調べる
+            for (let radio of styleCss) {
+                // 見つけたら
+                if (radio.value == setting.Thema) {
+                    // チェックON
+                    radio.checked = true;
+                    break
+                }
+            }
         }
     }, false);
     // onsenUIのページが破棄されるとき
