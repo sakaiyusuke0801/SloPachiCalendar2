@@ -51,4 +51,5 @@ td {
 .list-item {
   font-size: 15px;
   border: 1px solid gray;
+  z-index: 100;
 }
