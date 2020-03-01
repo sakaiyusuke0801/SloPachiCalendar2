@@ -40,9 +40,16 @@ td {
     pointer-events: none; /* 電話番号リンク無効 */
 }
 #balance_list {
-    margin-top: 350px;
+    margin-bottom: 450px;
     font-size: 1px;
+}
+#balance_all {
+    margin-top: 389px;
+    background-color: white;
+    border: 1px solid gray;
 }
 .list-item {
   font-size: 15px;
+  border: 1px solid gray;
+  z-index: 100;
 }
