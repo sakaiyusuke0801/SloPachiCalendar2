@@ -471,7 +471,22 @@ let styleCssRadioChange = function () {
         }
     }
 }
-
+// 当月移動
+let setCurrentMonth = function () {
+    // 当月にする
+    dispCalDate = new Date();
+    // カレンダーの日付を更新する
+    app.calendar.setNowDispDate(dispCalDate);
+    // 選択日付も当日にする
+    selectDate = new Date();
+    // 選択日付のデータを設定する
+    app.setSelectDateObj();
+    // 選択日付の一覧表示
+    app.setSelectDateList();
+    // 再描画
+    // カレンダーページの読み込み
+    fn.load('calendar.html');
+}
 // 翌月移動
 let setNextMonth = function () {
     // 表示日付の月を加算する
