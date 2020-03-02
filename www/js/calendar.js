@@ -114,11 +114,12 @@ class Calendar {
         outHtml += "<caption id='" + ID_CALENDAR_TABLE_CAPTION + "'>";
         // 前月移動マーク
         outHtml += "<section style='padding:2px'>"
-        outHtml += "<ons-button modifier='material--flat' onclick='setBeforeMonth()'>＜＜前月　</ons-button>";
+        outHtml += "<ons-button modifier='material--flat' onclick='setCurrentMonth()'>当月</ons-button>";
+        outHtml += "<ons-button modifier='material--flat' onclick='setBeforeMonth()'>前月</ons-button>";
         // 年月
         outHtml += year + "/" + month;
         // 翌月移動マーク
-        outHtml += "<ons-button modifier='material--flat' onclick='setNextMonth()'>　次月＞＞</ons-button>";
+        outHtml += "<ons-button modifier='material--flat' onclick='setNextMonth()'>次月</ons-button>";
         // 閉じタグ
         outHtml += "</section>";
         outHtml += "</caption>";
