@@ -41,6 +41,7 @@ td {
 #balance_list {
     margin-bottom: 450px;
     font-size: 1px;
+    overflow: auto;
 }
 #balance_all {
     text-align: left;
