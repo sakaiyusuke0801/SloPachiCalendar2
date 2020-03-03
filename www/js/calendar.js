@@ -4,7 +4,7 @@
 // 曜日
 const WEEKS = ['日', '月', '火', '水', '木', '金', '土']
 // カレンダーの縦数
-const TATE_NUM = 5;
+const TATE_NUM = 6;
 
 /* ID、CLASS関連 */
 const ID_CALENDAR_TABLE = "calendar_parent";

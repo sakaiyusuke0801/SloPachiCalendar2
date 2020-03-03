@@ -9,6 +9,7 @@
 	<script src="lib/onsenui/js/onsenui.min.js"></script>
 
 	<!-- sakai.y -->
+	<script src="lib/chart_js/Chart.min.js"></script>
 	<script src="js/calendar.js"></script>
 	<script src="js/main.js"></script>
 
@@ -17,9 +18,6 @@
 	<link id="costum_style" rel="stylesheet" href="lib/onsenui/css/onsen-css-components.min.css">
 	<link rel="stylesheet" href="css/style.css">
 
-	<script>
-
-	</script>
 </head>
 
 <body>
@@ -29,6 +27,9 @@
 				<ons-list>
 					<ons-list-item onclick="fn.load('calendar.html')" tappable>
 						カレンダー
+					</ons-list-item>
+					<ons-list-item onclick="fn.load('chart.html')" tappable>
+						チャート
 					</ons-list-item>
 					<ons-list-item onclick="fn.load('settings.html')" tappable>
 						設定
@@ -73,6 +74,24 @@
 					<!-- ここに一覧が動的にはいる -->
 				</ons-list>
 			</div>
+		</ons-page>
+	</ons-template>
+
+	<!-- チャート画面 -->
+	<ons-template id="chart.html">
+		<ons-page id="chart_page">
+			<ons-toolbar>
+				<div class="left">
+					<ons-toolbar-button onclick="fn.open()">
+						<ons-icon icon="ion-ios-menu, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+				<div class="center">
+					チャート
+				</div>
+			</ons-toolbar>
+			<canvas id="yearChart"></canvas>
+			<canvas id="janChart"></canvas>
 		</ons-page>
 	</ons-template>
 
@@ -133,19 +152,13 @@
 					<label class="left">
                         <ons-radio name="styleCss" input-id="default" value="lib/onsenui/css/onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
                     </label>
-					<label for="default" class="center">デフォルト</label>
+					<label for="default" class="center">ライト</label>
 				</ons-list-item>
 				<ons-list-item tappable>
 					<label class="left">
-                        <ons-radio name="styleCss" input-id="dark" value="lib/onsenui/css/dark-onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
+                        <ons-radio name="styleCss" input-id="dark" value="lib/onsenui/css/dark-2-onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
                     </label>
 					<label for="dark" class="center">ダーク</label>
-				</ons-list-item>
-				<ons-list-item tappable>
-					<label class="left">
-                        <ons-radio name="styleCss" input-id="old" value="lib/onsenui/css/old-onsen-css-components.min.css" onchange="styleCssRadioChange()" ></ons-radio>
-                    </label>
-					<label for="old" class="center">オールド</label>
 				</ons-list-item>
 				<ons-list-header>データ</ons-list-header>
 				<ons-list-item onclick="settingDeleteAllData()" tappable>

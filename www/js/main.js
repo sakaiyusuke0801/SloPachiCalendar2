@@ -649,8 +649,52 @@ ons.ready(function () {
             // 選択日付の一覧表示
             app.setSelectDateList();
         }
+        // チャートページ
+        if (event.target.matches("#chart_page")) {
+            console.log("chart_page init");
+
+            // 年チャート
+            var yearChartCtx = document.getElementById("yearChart");
+            var yearChart = new Chart(yearChartCtx, {
+                type: "line",
+                data: {
+                    labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                    datasets: [
+                        {
+                            label: "年",
+                            data: [-10000, 50000, -200000, 500000, 100000, 30000, -50000, 150000, 200000, -15000, -80000, 150000],
+                            borderColor: "rgba(255,0,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            var janChartCtx = document.getElementById("janChart");
+            var janChart = new Chart(janChartCtx, {
+                type: "line",
+                data: {
+                    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
+                    datasets: [
+                        {
+                            label: "１月",
+                            data: [1000, 50000, -10000, -20000, 7000, 8000, -80000, 5000],
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+        }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
+            console.log("settings_page init");
+
             // ラジオボタンの初期値補正
             // 開始日
             // Nameからタグを全取得
@@ -684,6 +728,10 @@ ons.ready(function () {
         if (event.target.matches("#calendar_page")) {
             console.log("calendar_page destroy");
         }
+        // チャートページ
+        if (event.target.matches("#chart_page")) {
+            console.log("chart_page destroy");
+        }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
             // 設定の保存
@@ -696,6 +744,10 @@ ons.ready(function () {
         if (event.target.matches("#calendar_page")) {
             console.log("calendar_page show");
         }
+        // チャートページ
+        if (event.target.matches("#chart_page")) {
+            console.log("chart_page show");
+        }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
         }
@@ -705,6 +757,10 @@ ons.ready(function () {
         // カレンダーページ
         if (event.target.matches("#calendar_page")) {
             console.log("calendar_page hide");
+        }
+        // チャートページ
+        if (event.target.matches("#chart_page")) {
+            console.log("chart_page hide");
         }
         // セッティングページ
         if (event.target.matches("#settings_page")) {
