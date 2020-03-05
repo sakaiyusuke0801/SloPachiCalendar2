@@ -7036,7 +7036,7 @@ ons-fab.fab--bottom__center, button.fab--bottom__center, .speed-dial.fab--bottom
   html[onsflag-iphonex-landscape] .fab--bottom__right {
     bottom: 21px; /* Omit 20px space */
   }
-  
+
   /* For left safe area */
   html[onsflag-iphonex-landscape] .fab--top__left,
   html[onsflag-iphonex-landscape] .fab--bottom__left {
@@ -7391,5 +7391,12 @@ ons-fab.fab--bottom__center, button.fab--bottom__center, .speed-dial.fab--bottom
   html[onsflag-iphonex-landscape] .dialog .page__content > .list:not(.list--inset) > .list-item > .list-item--chevron__right {
     padding-right: 30px;
   }
+}
+.calendar_non_target_td {
+  background-color: blanchedalmond
+}
+td {
+  background-color: white;
+  border: 1px solid gray;
 }
 /* non BEM */

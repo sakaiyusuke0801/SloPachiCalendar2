@@ -14,11 +14,7 @@ th {
     font-size: 10px;
 
 }
-/* 登録対象外の日にちに対して */
-.calendar_non_target_td {
-    font-size: 10px;
-    background-color: gray;
-}
+
 /* 外側の枠に対して */
 table {
     table-layout: fixed;
@@ -27,12 +23,10 @@ table {
 
 }
 td {
-
     height: 10%;
     text-align: start;    /* 水平方向 */
     vertical-align: top;  /* 垂直方向 */
     font-size: 10px;
-
 }
 /* Calendar内の数字 */
 .calendar_sum_str_div {
