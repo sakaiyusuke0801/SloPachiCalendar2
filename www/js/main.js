@@ -145,6 +145,38 @@ app.showActionSheetData = function (_dateStr, _idx) {
             }
         });
 };
+// アプリケーション：年データ取得
+app.getYearData = function () {
+    console.log("app.getYearData");
+
+    // 返却するのは月ごとの集計データ配列
+    let ret = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    // 現在
+    let now = new Date();
+    // 年
+    let nowYear = now.getFullYear();
+    // 今年の１月１日をカウンターのはじまりとする
+    let counter = new Date(nowYear, 0, 1);
+    // 翌年になるまで
+    while (counter.getFullYear() < (nowYear + 1)) {
+        // キーとなる日付文字列取得
+        let dateStr = app.calendar.getDateWithString(counter).substr(0, 10);
+        // ローカルストレージからデータ取得
+        if (app.storage.getItem(dateStr) != null) {
+            let array = JSON.parse(app.storage.getItem(dateStr));
+            if (array.length != 0) {
+                for (let obj of array) {
+                    // 数値を加算格納（getMonthの返り値は月の-1の数なのでそのまま配列インデックスに使用）
+                    ret[counter.getMonth()] += (parseInt(obj.ret, 10) - parseInt(obj.inv, 10));
+                }
+            }
+        }
+        // 翌日に
+        counter.setDate(counter.getDate() + 1);
+    }
+    // 返却
+    return ret;
+};
 
 // セッティングオブジェクト
 let setting = {};
@@ -655,6 +687,7 @@ ons.ready(function () {
 
             // 年チャート
             var yearChartCtx = document.getElementById("yearChart");
+            let yearData = app.getYearData();
             var yearChart = new Chart(yearChartCtx, {
                 type: "line",
                 data: {
@@ -662,7 +695,7 @@ ons.ready(function () {
                     datasets: [
                         {
                             label: "年",
-                            data: [-10000, 50000, -200000, 500000, 100000, 30000, -50000, 150000, 200000, -15000, -80000, 150000],
+                            data: yearData,
                             borderColor: "rgba(255,0,0,1)",
                             backgroundColor: "rgba(0,0,0,0)"
                         },
