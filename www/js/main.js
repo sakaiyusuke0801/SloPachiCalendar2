@@ -150,7 +150,7 @@ app.getYearData = function () {
     console.log("app.getYearData");
 
     // 返却するのは月ごとの集計データ配列
-    let ret = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
+    let ret = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     // 現在
     let now = new Date();
     // 年
@@ -168,6 +168,45 @@ app.getYearData = function () {
                 for (let obj of array) {
                     // 数値を加算格納（getMonthの返り値は月の-1の数なのでそのまま配列インデックスに使用）
                     ret[counter.getMonth()] += (parseInt(obj.ret, 10) - parseInt(obj.inv, 10));
+                }
+            }
+        }
+        // 翌日に
+        counter.setDate(counter.getDate() + 1);
+    }
+    // 返却
+    return ret;
+};
+// アプリケーション：年データ取得
+app.getMonthData = function (month) {
+    console.log("app.getMonthData");
+
+    // 返却オブジェクト
+    let ret = {
+        month: month,
+        inde: [],
+        data: [],
+    };
+    // 現在
+    let now = new Date();
+    // 年
+    let nowYear = now.getFullYear();
+    // その月の１日をカウンターのはじまりとする
+    let counter = new Date(nowYear, (ret.month - 1), 1);
+    // 翌月になるまで（１２月の場合は翌年）
+    while (counter.getMonth() < (ret.month) && counter.getFullYear() < (nowYear + 1)) {
+        // キーとなる日付文字列取得
+        let dateStr = app.calendar.getDateWithString(counter).substr(0, 10);
+        // その月のインデックス
+        ret.inde[counter.getDate() - 1] = counter.getDate();
+        ret.data[counter.getDate() - 1] = 0;
+        // ローカルストレージからデータ取得
+        if (app.storage.getItem(dateStr) != null) {
+            let array = JSON.parse(app.storage.getItem(dateStr));
+            if (array.length != 0) {
+                for (let obj of array) {
+                    // 数値を加算格納（getMonthの返り値は月の-1の数なのでそのまま配列インデックスに使用）
+                    ret.data[counter.getDate() - 1] += (parseInt(obj.ret, 10) - parseInt(obj.inv, 10));
                 }
             }
         }
@@ -686,9 +725,9 @@ ons.ready(function () {
             console.log("chart_page init");
 
             // 年チャート
-            var yearChartCtx = document.getElementById("yearChart");
+            let yearChartCtx = document.getElementById("yearChart");
             let yearData = app.getYearData();
-            var yearChart = new Chart(yearChartCtx, {
+            let yearChart = new Chart(yearChartCtx, {
                 type: "line",
                 data: {
                     labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
@@ -705,15 +744,237 @@ ons.ready(function () {
                     }
                 },
             });
-            var janChartCtx = document.getElementById("janChart");
-            var janChart = new Chart(janChartCtx, {
+            // １月
+            let janChartCtx = document.getElementById("janChart");
+            let janChartObj = app.getMonthData(1);
+            let janChart = new Chart(janChartCtx, {
                 type: "line",
                 data: {
-                    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
+                    labels: janChartObj.inde,
                     datasets: [
                         {
                             label: "１月",
-                            data: [1000, 50000, -10000, -20000, 7000, 8000, -80000, 5000],
+                            data: janChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ２月
+            let febChartCtx = document.getElementById("FebChart");
+            let febChartObj = app.getMonthData(2);
+            let febChart = new Chart(febChartCtx, {
+                type: "line",
+                data: {
+                    labels: febChartObj.inde,
+                    datasets: [
+                        {
+                            label: "２月",
+                            data: febChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ３月
+            let MarChartCtx = document.getElementById("MarChart");
+            let MarChartObj = app.getMonthData(3);
+            let MarChart = new Chart(MarChartCtx, {
+                type: "line",
+                data: {
+                    labels: MarChartObj.inde,
+                    datasets: [
+                        {
+                            label: "３月",
+                            data: MarChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ４月
+            let AprChartCtx = document.getElementById("AprChart");
+            let AprChartObj = app.getMonthData(4);
+            let AprChart = new Chart(AprChartCtx, {
+                type: "line",
+                data: {
+                    labels: AprChartObj.inde,
+                    datasets: [
+                        {
+                            label: "４月",
+                            data: AprChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ５月
+            let MayChartCtx = document.getElementById("MayChart");
+            let MayChartObj = app.getMonthData(5);
+            let MayChart = new Chart(MayChartCtx, {
+                type: "line",
+                data: {
+                    labels: MayChartObj.inde,
+                    datasets: [
+                        {
+                            label: "５月",
+                            data: MayChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ６月
+            let JunChartCtx = document.getElementById("JunChart");
+            let JunChartObj = app.getMonthData(6);
+            let JunChart = new Chart(JunChartCtx, {
+                type: "line",
+                data: {
+                    labels: JunChartObj.inde,
+                    datasets: [
+                        {
+                            label: "６月",
+                            data: JunChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ７月
+            let JulChartCtx = document.getElementById("JulChart");
+            let JulChartObj = app.getMonthData(7);
+            let JulChart = new Chart(JulChartCtx, {
+                type: "line",
+                data: {
+                    labels: JulChartObj.inde,
+                    datasets: [
+                        {
+                            label: "７月",
+                            data: JulChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ８月
+            let AugChartCtx = document.getElementById("AugChart");
+            let AugChartObj = app.getMonthData(8);
+            let AugChart = new Chart(AugChartCtx, {
+                type: "line",
+                data: {
+                    labels: AugChartObj.inde,
+                    datasets: [
+                        {
+                            label: "８月",
+                            data: AugChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // ９月
+            let SepChartCtx = document.getElementById("SepChart");
+            let SepChartObj = app.getMonthData(9);
+            let SepChart = new Chart(SepChartCtx, {
+                type: "line",
+                data: {
+                    labels: SepChartObj.inde,
+                    datasets: [
+                        {
+                            label: "９月",
+                            data: SepChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // １０月
+            let OctChartCtx = document.getElementById("OctChart");
+            let OctChartObj = app.getMonthData(10);
+            let OctChart = new Chart(OctChartCtx, {
+                type: "line",
+                data: {
+                    labels: OctChartObj.inde,
+                    datasets: [
+                        {
+                            label: "１０月",
+                            data: OctChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // １１月
+            let NovChartCtx = document.getElementById("NovChart");
+            let NovChartObj = app.getMonthData(11);
+            let NovChart = new Chart(NovChartCtx, {
+                type: "line",
+                data: {
+                    labels: NovChartObj.inde,
+                    datasets: [
+                        {
+                            label: "１１月",
+                            data: NovChartObj.data,
+                            borderColor: "rgba(125,125,0,1)",
+                            backgroundColor: "rgba(0,0,0,0)"
+                        },
+                    ],
+                    options: {
+
+                    }
+                },
+            });
+            // １２月
+            let DecChartCtx = document.getElementById("DecChart");
+            let DecChartObj = app.getMonthData(12);
+            let DecChart = new Chart(DecChartCtx, {
+                type: "line",
+                data: {
+                    labels: DecChartObj.inde,
+                    datasets: [
+                        {
+                            label: "１２月",
+                            data: DecChartObj.data,
                             borderColor: "rgba(125,125,0,1)",
                             backgroundColor: "rgba(0,0,0,0)"
                         },
