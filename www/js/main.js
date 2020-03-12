@@ -658,6 +658,9 @@ let cancelSettingDeleteAllData = function () {
 ons.ready(function () {
     console.log("Onsen UI is ready");
 
+    // オートスタイリングの無効化
+    ons.disableAutoStyling();
+
     // 設定の初期化
     setting.initSetting();
     // 設定からスタイル変更

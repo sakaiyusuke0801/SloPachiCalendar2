@@ -70,7 +70,9 @@ ons-bottom-toolbar {
 }
 
 .page__content {
-  overflow: auto;
+  /* 200313 sakai ページコンテンツをautoにするとスクロールバーが表示されるためhidden */
+  /*overflow: auto;*/
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
   z-index: 0;
   -ms-touch-action: pan-y;

@@ -1,8 +1,9 @@
 /**/
 /* カレンダーの大外枠 */
 #calendar_parent {
-    position: fixed;
-    margin-top: 61px;
+    /* 200313 sakai page__contentでのスクロールバーを消すoverflow: noneを入れたのでfixed不要。*/
+    /*position: fixed;*/
+    /*margin-top: 61px;*/
     width: 100%;        /* 横幅100% */
     height: 50vh;       /* 半分 */
     z-index: 100;
@@ -33,13 +34,16 @@ td {
    pointer-events: none; /* 電話番号リンク無効 */
 }
 #balance_list {
-    margin-bottom: 450px;
+    /*margin-bottom: 450px;*/
     font-size: 1px;
     overflow: auto;
 }
 #balance_all {
+    /* 200313 sakai 自然に回り込ませるfloat : noneを指定 */
+    float : none;
     text-align: left;
-    margin-top: 389px;
+    /* 200313 sakai 親のposition: fixedがなくなりそのまま上のコンテンツの下に配置されるので不要 */
+    /*margin-top: 389px;*/
 }
 .list-item {
   font-size: 15px;
