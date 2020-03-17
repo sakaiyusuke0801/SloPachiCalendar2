@@ -49,3 +49,7 @@ td {
   font-size: 15px;
     z-index: 100;
 }
+#charts {
+    float : none;
+    overflow: auto;
+}
