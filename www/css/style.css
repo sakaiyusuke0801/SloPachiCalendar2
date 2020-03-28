@@ -50,6 +50,11 @@ td {
     z-index: 100;
 }
 #charts {
-    float : none;
-    overflow: auto;
+  display: block;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; /* 指定された要素で惰性付き( momentum-based ) のスクロールを使用するかどうか */
+  -ms-overflow-style: none;          /* IE、Edgeでスクロールバーを非表示にするらしい、でも非表示なるくね */
+  -ms-scroll-snap-type: mandatory;   /* スクロール先に居座り続けるようになる */
+}
 }
