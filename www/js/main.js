@@ -407,8 +407,24 @@ let exeUpdateData = function (_idx) {
     let invInput = document.getElementById("invUpdateInput").value;
     // リターン
     let retInput = document.getElementById("retUpdateInput").value;
+
+    // 収出に中身ない
+    if (!invInput) {
+        invInput = 0;
+    }
+    // 支入に中身ない
+    if (!retInput) {
+        retInput = 0;
+    }
+    // 中身ない
+    if (invInput == 0 && retInput == 0) {
+        alert("入力が正しくありません。");
+        // フォーム初期化
+        document.getElementById("invUpdateInput").value = null;
+        document.getElementById("retUpdateInput").value = null;
+    }
     // 中身ある
-    if (invInput && retInput) {
+    else {
         // リストのチェック
         if (selectDateObjectList == null) {
             // 空なら初期化
