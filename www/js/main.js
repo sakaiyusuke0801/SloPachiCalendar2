@@ -80,7 +80,7 @@ app.setSelectDateList = function () {
             // リストアイテム生成
             let item = document.createElement("ons-list-item");
             // データ表示
-            item.textContent = "投資:" + selectDateObjectList[idx].inv + " " + "リターン:" + selectDateObjectList[idx].ret;
+            item.textContent = "支出:" + selectDateObjectList[idx].inv + " " + "収入:" + selectDateObjectList[idx].ret;
             // クリックイベント
             item.setAttribute("onclick", "app.showActionSheetData( '" + item.textContent + "'," + idx + ")");
             // リストアイテム追加
@@ -95,7 +95,7 @@ app.setSelectDateList = function () {
     // 文字は左へ
     newStringDiv.classList.add("left");
     // 文字
-    newStringDiv.textContent = "New...";
+    newStringDiv.textContent = "新規登録...";
     item.appendChild(newStringDiv);
 
     // クリック属性追加、関数登録
@@ -276,8 +276,23 @@ let registNewData = function () {
     let invInput = document.getElementById("invInput").value;
     // リターン
     let retInput = document.getElementById("retInput").value;
-    // 中身ある
-    if (invInput && retInput) {
+
+    // 収出に中身ない
+    if (!invInput) {
+        invInput = 0;
+    }
+    // 支入に中身ない
+    if (!retInput) {
+        retInput = 0;
+    }
+    // 中身ない
+    if (invInput == 0 && retInput == 0) {
+        alert("入力が正しくありません。");
+        // フォーム初期化
+        document.getElementById("invInput").value = null;
+        document.getElementById("retInput").value = null;
+    }
+    else {
         // 収支データ作成
         let obj = {};
         obj.inv = invInput;
@@ -307,12 +322,6 @@ let registNewData = function () {
 
         // 選択日付の一覧表示
         app.setSelectDateList();
-    }
-    else {
-        alert("入力が正しくありません。");
-        // フォーム初期化
-        document.getElementById("invInput").value = null;
-        document.getElementById("retInput").value = null;
     }
 }
 // newキャンセルクリック

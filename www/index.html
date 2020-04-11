@@ -67,7 +67,7 @@
 			<div class="page__background"></div>
 
 			<div class="page__content">
-				<div id="calendar">calendar is not read</div>
+				<div id="calendar"></div>
 				<div id="balance_all">
 					<!-- ここに合計金額がはいる -->
 				</div>
@@ -198,6 +198,9 @@
 					About
 				</div>
 			</ons-toolbar>
+            環境：Monaca　OnsenUI</br></br>
+            チャート：Chart.js　http://www.chartjs.org</br></br>
+            ロゴ：</br></br>
 		</ons-page>
 	</ons-template>
 
@@ -206,12 +209,12 @@
 		<ons-dialog id="regist_dialog">
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					投資　　：
-					<ons-input id="invInput" type="number" modifier="material" placeholder="投資"></ons-input>
+					支出：
+					<ons-input id="invInput" type="number" modifier="material" placeholder="支出"></ons-input>
 				</p>
 				<p>
-					リターン：
-					<ons-input id="retInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+					収入：
+					<ons-input id="retInput" type="number" modifier="material" placeholder="収入"></ons-input>
 				</p>
 				<p style="margin-top: 30px;">
 					<ons-button id="regOk" modifier="material--flat" onclick="registNewData()">登録</ons-button>
@@ -226,12 +229,12 @@
 		<ons-dialog id="update_dialog">
 			<div style="text-align: center; margin-top: 30px;">
 				<p>
-					投資　　：
-					<ons-input id="invUpdateInput" type="number" modifier="material" placeholder="投資"></ons-input>
+					支出：
+					<ons-input id="invUpdateInput" type="number" modifier="material" placeholder="支出"></ons-input>
 				</p>
 				<p>
-					リターン：
-					<ons-input id="retUpdateInput" type="number" modifier="material" placeholder="リターン"></ons-input>
+					収入：
+					<ons-input id="retUpdateInput" type="number" modifier="material" placeholder="収入"></ons-input>
 				</p>
 				<p id="updateButtons" style="margin-top: 30px;">
 					<!-- ここにボタンが動的にはいる -->
